@@ -21,7 +21,7 @@ various steps of the user-signup process.
 
 
 from django.conf.urls.defaults import patterns, url
-from django.views.generic.simple import direct_to_template
+from django.views.generic import TemplateView
 from django.contrib.auth import views as auth_views
 
 from registration.forms import PasswordResetForm
@@ -34,7 +34,8 @@ Activation keys get matched by \w+ instead of the more specific
 that way it can return a sensible "invalid key" message instead of a
 confusing 404.
 """
-urlpatterns = patterns('',
+urlpatterns = patterns(
+    '',
     url(r'^activate/(?P<activation_key>\w+)/$',
         activate,
         name='registration_activate'),
@@ -68,7 +69,6 @@ urlpatterns = patterns('',
         register,
         name='registration_register'),
     url(r'^register/complete/$',
-        direct_to_template,
-        {'template': 'registration/registration_complete.html'},
+        TemplateView.as_view(template_name='registration/registration_complete.html'),
         name='registration_complete'),
 )
